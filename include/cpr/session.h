@@ -20,6 +20,7 @@
 #include "cpr/connect_timeout.h"
 #include "cpr/low_speed.h"
 #include "cpr/limit_rate.h"
+#include "cpr/interface.h"
 #include "cpr/ssl_options.h"
 #include "cpr/timeout.h"
 #include "cpr/user_agent.h"
@@ -54,6 +55,7 @@ class Session {
     void SetBody(Body&& body);
     void SetBody(const Body& body);
     void SetLowSpeed(const LowSpeed& low_speed);
+    void SetInterface(const Interface& interface);
     void SetVerifySsl(const VerifySsl& verify);
 
     // Used in templated functions
@@ -79,6 +81,7 @@ class Session {
     void SetOption(const Body& body);
     void SetOption(const LowSpeed& low_speed);
     void SetOption(const LimitRate& limit_rate);
+    void SetOption(const Interface& interface);
     void SetOption(const VerifySsl& verify);
     void SetOption(const Verbose& verbose);
 
