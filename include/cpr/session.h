@@ -21,6 +21,7 @@
 #include "cpr/low_speed.h"
 #include "cpr/limit_rate.h"
 #include "cpr/interface.h"
+#include "cpr/xferfunction.h"
 #include "cpr/ssl_options.h"
 #include "cpr/timeout.h"
 #include "cpr/user_agent.h"
@@ -57,6 +58,7 @@ class Session {
     void SetLowSpeed(const LowSpeed& low_speed);
     void SetInterface(const Interface& interface);
     void SetVerifySsl(const VerifySsl& verify);
+    void SetXferInfoFunction(const XferFunction& xferfunction);
 
     // Used in templated functions
     void SetOption(const Url& url);
@@ -82,6 +84,7 @@ class Session {
     void SetOption(const LowSpeed& low_speed);
     void SetOption(const LimitRate& limit_rate);
     void SetOption(const Interface& interface);
+    void SetOption(const XferFunction& xferfunction);
     void SetOption(const VerifySsl& verify);
     void SetOption(const Verbose& verbose);
 

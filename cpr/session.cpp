@@ -38,6 +38,7 @@ class Session::Impl {
     void SetLowSpeed(const LowSpeed& low_speed);
     void SetLimitRate(const LimitRate& limit_rate);
     void SetInterface(const Interface& interface);
+    void SetXferInfoFunction(const XferFunction& function);
     void SetVerbose(const Verbose& verbose);
     void SetVerifySsl(const VerifySsl& verify);
 
@@ -332,6 +333,21 @@ void Session::Impl::SetInterface(const Interface &interface) {
     }
 }
 
+static int xferinfo(void *p,
+                    curl_off_t dltotal, curl_off_t dlnow,
+                    curl_off_t ultotal, curl_off_t ulnow) {
+    auto xferfn = reinterpret_cast<XferFunction*>(p);
+    return xferfn->fn(dltotal, dlnow, ultotal, ulnow) ? 0 : 1;
+}
+
+void Session::Impl::SetXferInfoFunction(const XferFunction &xferfunction) {
+    auto curl = curl_->handle;
+    if (curl) {
+        curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, xferinfo);
+        curl_easy_setopt(curl, CURLOPT_XFERINFODATA, &xferfunction);
+        curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L);
+    }
+}
 void Session::Impl::SetVerifySsl(const VerifySsl& verify) {
     auto curl = curl_->handle;
     if (curl) {
@@ -488,6 +504,7 @@ void Session::SetBody(const Body& body) { pimpl_->SetBody(body); }
 void Session::SetBody(Body&& body) { pimpl_->SetBody(std::move(body)); }
 void Session::SetLowSpeed(const LowSpeed& low_speed) { pimpl_->SetLowSpeed(low_speed); }
 void Session::SetInterface(const Interface &interface) { pimpl_->SetInterface(interface); }
+void Session::SetXferInfoFunction(const XferFunction& xferfunction) { pimpl_->SetXferInfoFunction(xferfunction); }
 void Session::SetVerifySsl(const VerifySsl& verify) { pimpl_->SetVerifySsl(verify); }
 void Session::SetOption(const Url& url) { pimpl_->SetUrl(url); }
 void Session::SetOption(const Parameters& parameters) { pimpl_->SetParameters(parameters); }
@@ -512,6 +529,7 @@ void Session::SetOption(Body&& body) { pimpl_->SetBody(std::move(body)); }
 void Session::SetOption(const LowSpeed& low_speed) { pimpl_->SetLowSpeed(low_speed); }
 void Session::SetOption(const LimitRate& limit_rate) { pimpl_->SetLimitRate(limit_rate); }
 void Session::SetOption(const Interface& interface) { pimpl_->SetInterface(interface); }
+void Session::SetOption(const XferFunction& xferfunction) { pimpl_->SetXferInfoFunction(xferfunction); }
 void Session::SetOption(const VerifySsl& verify) { pimpl_->SetVerifySsl(verify); }
 void Session::SetOption(const Verbose& verbose) { pimpl_->SetVerbose(verbose); }
 Response Session::Delete() { return pimpl_->Delete(); }
