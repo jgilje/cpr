@@ -329,6 +329,9 @@ void Session::Impl::SetLimitRate(const LimitRate& limit_rate) {
 void Session::Impl::SetInterface(const Interface &interface) {
     auto curl = curl_->handle;
     if (curl) {
+        if (interface.interface.empty()) {
+            return;
+        }
         curl_easy_setopt(curl, CURLOPT_INTERFACE, interface.interface.c_str());
     }
 }
