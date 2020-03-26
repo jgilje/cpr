@@ -3,6 +3,13 @@
 [![gitter](https://badges.gitter.im/cpp-pm/community.svg)](https://gitter.im/whoshuu/cpr) [![Documentation](https://img.shields.io/badge/documentation-master-brightgreen.svg)](https://whoshuu.github.io/cpr/)
 [![Build Status](https://travis-ci.org/whoshuu/cpr.svg?branch=master)](https://travis-ci.org/whoshuu/cpr) [![Build status](https://ci.appveyor.com/api/projects/status/imalkp3a6hblpj5y/branch/master?svg=true)](https://ci.appveyor.com/project/whoshuu/cpr/branch/master) [![Coverage Status](https://coveralls.io/repos/whoshuu/cpr/badge.svg?branch=master&service=github)](https://coveralls.io/github/whoshuu/cpr)
 
+## Features not merged to upstream
+
+* Wrappers for
+  * `CURLOPT_MAX_RECV_SPEED_LARGE` and `CURLOPT_MAX_SEND_SPEED_LARGE` - `cpr::LimitRate`
+  * `CURLOPT_INTERFACE` - `cpr::Interface`
+  * `CURLOPT_XFERINFOFUNCTION` - `cpr::XferFunction`
+
 ## Announcements
 
 The cpr project will have a new maintainer: [Tim Stack](https://github.com/tstack). He has graciously agreed to donate his time to keep the project healthy and grow it. For those waiting on their PRs and issues to be resolved, I appreciate your patience and know that you will be in good hands moving forward.
